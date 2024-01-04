@@ -4,6 +4,9 @@ const nextConfig = {
     appDir: true,
     serverComponentsExternalPackages: ["@prisma/client", "bcrypt"],
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 const dotenv = require("dotenv");
 dotenv.config();

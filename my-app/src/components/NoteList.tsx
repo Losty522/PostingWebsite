@@ -1,7 +1,8 @@
 import prisma from "@/db";
 import NoteListItem from "./NoteListItem";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+//import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import authOptions from "@/app/api/auth/[...nextauth]/option";
 
 const NoteList = async () => {
   //const notes = await prisma?.note.findMany();

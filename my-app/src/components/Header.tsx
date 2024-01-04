@@ -2,7 +2,8 @@ import { RiHome2Line, RiUserLine, RiAddLine } from "react-icons/ri";
 import { CiLogout } from "react-icons/ci";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+//import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import authOptions from "@/app/api/auth/[...nextauth]/option";
 import truncateString from "./maxString";
 
 const Header = async () => {

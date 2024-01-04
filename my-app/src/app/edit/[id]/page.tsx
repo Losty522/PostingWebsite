@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 import prisma from "@/db";
 import { v2 as cloudinary } from "cloudinary";
 import { UploadApiResponse } from "cloudinary";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+//import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import authOptions from "@/app/api/auth/[...nextauth]/option";
 import { getServerSession } from "next-auth";
 
 cloudinary.config({

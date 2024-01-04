@@ -14,7 +14,8 @@ cloudinary.config({
 import { getServerSession } from "next-auth";
 
 import SignIn from "@/components/SignIn";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+//import { authOptions } from "../api/auth/[...nextauth]/route";
+import authOptions from "@/app/api/auth/[...nextauth]/option";
 
 const page = async () => {
   const session = await getServerSession(authOptions);
