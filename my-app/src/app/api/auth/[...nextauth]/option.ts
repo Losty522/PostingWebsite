@@ -19,6 +19,7 @@ const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
+        console.log('1 Authorize method called');
         if (!credentials?.email || !credentials.password) {
           console.log('errordsada');
           return null;
@@ -29,12 +30,12 @@ const authOptions: NextAuthOptions = {
             email: credentials?.email,
           },
         });
-
+        console.log('2 Authorize method called');
         if (!user) {
           console.log('errordsada');
           return null;
         }
-
+        console.log('3 Authorize method called');
         const isPasswordValid = await compare(
           credentials?.password,
           user.password
@@ -43,7 +44,7 @@ const authOptions: NextAuthOptions = {
         if (!isPasswordValid) {
           return null;
         }
-
+        console.log('4 Authorize method called');
         return {
           id: user.id + '',
           email: user.email,
