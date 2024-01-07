@@ -1,12 +1,5 @@
 "use client";
 import Link from "next/link";
-import { v2 as cloudinary } from "cloudinary";
-import { UploadApiResponse } from "cloudinary";
-
-import prisma from "@/db";
-import authOptions from "@/app/api/auth/[...nextauth]/option";
-import { getServerSession } from "next-auth";
-import React, { FormEvent, useState } from "react";
 import crypto from "crypto";
 import { useRouter } from "next/navigation";
 
@@ -23,11 +16,10 @@ const AddForm = (props: Props) => {
   const apiSecret = process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET;
   const timestamp = Math.floor(Date.now() / 1000);
   const uploadPreset = "ml_default";
-  const signatureString = `timestamp=${timestamp}&upload_preset=${uploadPreset}`;
   const router = useRouter();
 
   const generateSignature = (timestamp: number) => {
-    const signatureString = `timestamp=${timestamp}&upload_preset=ml_default${apiSecret}`;
+    const signatureString = `timestamp=${timestamp}&upload_preset=${uploadPreset}${apiSecret}`;
     const signature = crypto
       .createHash("sha1")
       .update(signatureString)
@@ -42,13 +34,9 @@ const AddForm = (props: Props) => {
   ) => {
     e.preventDefault();
     const { signature, timestamp } = generateSignature(timestampG);
-    console.log("submit");
     const fileInput = e.currentTarget.elements.namedItem("image");
     const titleInput = e.currentTarget.elements.namedItem("title");
     const contentInput = e.currentTarget.elements.namedItem("content");
-    console.log("fileInput:", fileInput);
-    console.log("titleInput:", titleInput);
-    console.log("contentInput:", contentInput);
 
     if (
       fileInput instanceof HTMLInputElement &&
@@ -68,8 +56,6 @@ const AddForm = (props: Props) => {
       formData.append("timestamp", String(timestamp));
       const title = titleInput.value;
       const content = contentInput.value;
-      console.log(title);
-      console.log(content);
 
       if (!title || title.length === 0 || title.length > 20) {
         console.log("erro title");
@@ -98,8 +84,8 @@ const AddForm = (props: Props) => {
         }
 
         const result = await response.json();
-        console.log(result);
 
+        //upload data prisma api
         const dbResponse = await fetch("api/addNote", {
           method: "POST",
           headers: {
@@ -123,8 +109,6 @@ const AddForm = (props: Props) => {
         console.log("Data saved to database successfully");
         router.push("/");
         router.refresh();
-
-        //upload data prisma api
       } catch (error) {
         console.error("Error uploading to Cloudinary:", error);
       }

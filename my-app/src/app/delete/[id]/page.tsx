@@ -7,9 +7,9 @@ import { UploadApiResponse, v2 as cloudinary } from "cloudinary";
 import Image from "next/image";
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_API_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_API_CLOUD_NAME,
+  api_key: process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+  api_secret: process.env.NEXT_PUBLIC_CLOUDINARY_API_SECRET,
 });
 
 type Post = {
@@ -36,10 +36,9 @@ const page = async ({ params }: { params: { id: string } }) => {
       (resolve, reject) => {
         cloudinary.uploader.destroy(String(pubId), (error, result) => {
           if (error) {
-            //console.error("Cloudinary delete error:", error);
             reject(error);
           }
-          //console.log("Cloudinary delete result:", result);
+
           resolve(result);
         });
       }
