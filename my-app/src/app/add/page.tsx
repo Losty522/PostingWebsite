@@ -1,21 +1,19 @@
 import Header from "@/components/Header";
-import Link from "next/link";
-import { redirect } from "next/navigation";
+//import Link from "next/link";
+//import { redirect } from "next/navigation";
 import prisma from "@/db";
 import { v2 as cloudinary } from "cloudinary";
 import { UploadApiResponse } from "cloudinary";
+import { getServerSession } from "next-auth";
+import SignIn from "@/components/SignIn";
+import authOptions from "@/app/api/auth/[...nextauth]/option";
+import AddForm from "@/components/addForm/AddForm";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_API_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
-import { getServerSession } from "next-auth";
-
-import SignIn from "@/components/SignIn";
-//import { authOptions } from "../api/auth/[...nextauth]/route";
-import authOptions from "@/app/api/auth/[...nextauth]/option";
 
 const page = async () => {
   const session = await getServerSession(authOptions);
@@ -24,76 +22,84 @@ const page = async () => {
   }
 
   //once submit button , the function will be called
-  const addNote = async (formData: FormData) => {
-    "use server";
+  // const addNote = async (formData: FormData) => {
+  //   "use server";
 
-    const titleInput = formData.get("title")?.valueOf();
-    const contentInput = formData.get("content")?.valueOf();
+  //   const titleInput = formData.get("title")?.valueOf();
+  //   const contentInput = formData.get("content")?.valueOf();
+  //   const imagetInput = formData.get("image") as File;
 
-    const imagetInput = formData.get("image") as File;
-    const arrayBuffer = await imagetInput.arrayBuffer();
-    const buffer = new Uint8Array(arrayBuffer);
+  //   const arrayBuffer = await imagetInput.arrayBuffer();
+  //   const buffer = new Uint8Array(arrayBuffer);
 
-    if (
-      typeof titleInput !== "string" ||
-      titleInput.length === 0 ||
-      titleInput.length > 20
-    ) {
-      return;
-      //throw new Error();
-    }
-    if (
-      typeof contentInput !== "string" ||
-      contentInput.length === 0 ||
-      contentInput.length > 200
-    ) {
-      return;
-      //throw new Error();
-    }
+  //   if (
+  //     typeof titleInput !== "string" ||
+  //     titleInput.length === 0 ||
+  //     titleInput.length > 20
+  //   ) {
+  //     return;
+  //     //throw new Error();
+  //   }
+  //   if (
+  //     typeof contentInput !== "string" ||
+  //     contentInput.length === 0 ||
+  //     contentInput.length > 200
+  //   ) {
+  //     return;
+  //     //throw new Error();
+  //   }
 
-    if (imagetInput?.name == "undefined") {
-      return;
-    }
+  //   if (imagetInput?.name == "undefined") {
+  //     return;
+  //   }
 
-    //upload data
-    const cloudinaryResult: UploadApiResponse | undefined = await new Promise(
-      (resolve, reject) => {
-        cloudinary.uploader
-          .upload_stream({}, function (error, result) {
-            if (error) {
-              reject(error);
-            }
-            resolve(result);
-          })
-          .end(buffer);
-      }
-    );
+  //   //upload data
+  //   const cloudinaryResult: UploadApiResponse | undefined = await new Promise(
+  //     (resolve, reject) => {
+  //       cloudinary.uploader
+  //         .upload_stream({}, function (error, result) {
+  //           if (error) {
+  //             reject(error);
+  //           }
+  //           resolve(result);
+  //         })
+  //         .end(buffer);
+  //     }
+  //   );
 
-    // Check if Cloudinary result has a secure_url
-    if (!cloudinaryResult?.secure_url) {
-      console.log("Cloudinary upload failed");
-      return;
-    }
-    await console.log(cloudinaryResult);
-    await prisma?.note.create({
-      data: {
-        title: titleInput,
-        content: contentInput,
-        image: cloudinaryResult?.secure_url,
+  //   // Check if Cloudinary result has a secure_url
+  //   if (!cloudinaryResult?.secure_url) {
+  //     console.log("Cloudinary upload failed");
+  //     return;
+  //   }
+  //   await console.log(cloudinaryResult);
+  //   await prisma?.note.create({
+  //     data: {
+  //       title: titleInput,
+  //       content: contentInput,
+  //       image: cloudinaryResult?.secure_url,
 
-        publicId: cloudinaryResult?.public_id,
-        email: String(session.user?.email),
-      },
-    });
+  //       publicId: cloudinaryResult?.public_id,
+  //       email: String(session.user?.email),
+  //     },
+  //   });
 
-    redirect("/");
-  };
+  //   redirect("/");
+  // };
 
   return (
     <>
       <Header />
-      <div>
-        <form action={addNote} className="flex flex-col text-black gap-2 p-10">
+      <AddForm email={session.user?.email} />
+      {/* <div>
+        <form action={addNote} className="flex flex-col text-black gap-2 p-10"> 
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            addNote(new FormData(e.target as HTMLFormElement));
+          }}
+          className="flex flex-col text-black gap-2 p-10"
+        >
           <div className="text-center mt-3 text-xl">Create a new post </div>
           <label>Title (Max:20 words)</label>
           <input
@@ -128,8 +134,8 @@ const page = async () => {
               Cancel
             </Link>
           </div>
-        </form>
-      </div>
+        </form> 
+      </div>*/}
     </>
   );
 };

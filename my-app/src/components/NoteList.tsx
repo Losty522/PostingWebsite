@@ -5,15 +5,19 @@ import { getServerSession } from "next-auth";
 import authOptions from "@/app/api/auth/[...nextauth]/option";
 
 const NoteList = async () => {
-  //const notes = await prisma?.note.findMany();
-
   const session = await getServerSession(authOptions);
   if (!session) {
     return null;
   }
-  const notes = await prisma.note.findMany({
-    where: { email: String(session.user?.email) },
-  });
+  let notes;
+  try {
+    notes = await prisma.note.findMany({
+      where: { email: String(session.user?.email) },
+    });
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 
   await console.log(notes);
   return (
