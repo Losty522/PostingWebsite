@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/dashboard",
+      "source": "(.*)",
       "missing": [
         {
           "type": "cookie",
