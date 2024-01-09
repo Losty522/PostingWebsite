@@ -5,7 +5,7 @@
       "missing": [
         {
           "type": "cookie",
-          "key": "auth_token"
+          "key": "next-auth.session-token"
         }
       ],
       "destination": "/auth/signin"
