@@ -7,9 +7,9 @@ import SignIn from "@/components/SignIn";
 
 const page = async () => {
   const session = await getServerSession(authOptions);
-  if (!session || !session.user?.email) {
-    return <SignIn />;
-  }
+  // if (!session || !session.user?.email) {
+  //   return <SignIn />;
+  // }
 
   return (
     <div>
