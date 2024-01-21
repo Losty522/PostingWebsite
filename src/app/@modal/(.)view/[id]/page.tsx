@@ -13,7 +13,8 @@ const page = async ({ params }: { params: { id: string } }) => {
   return (
     <div className="flex justify-center items-center bg-black bg-opacity-60 p-5 fixed top-0 left-0 h-full w-full">
       {/* <div className="flex flex-col bg-white text-black p-3 h-1/2 w-1/2 sm:h-1/2 w-1/2"> */}
-      <div className="flex flex-col bg-white text-black p-3 sm:h-3/4 w-3/4 md:h-3/4 w-1/2 lg:h-3/4 w-1/2 xl:h-3/4 w-1/2">
+      {/* <div className="flex flex-col bg-white text-black p-3 sm:h-3/4 w-3/4 md:h-3/4 w-1/2 lg:h-3/4 w-1/2 xl:h-3/4 w-1/2"> */}
+      <div className="flex flex-col bg-white text-black p-3 w-11/12 h-4/5 text-center">
         <Link
           href=".."
           className="self-end  text-zinc-900 px-2 py-1 text-center hover:text-red-700 "
@@ -21,17 +22,15 @@ const page = async ({ params }: { params: { id: string } }) => {
           <IoIosCloseCircleOutline size={34} />
         </Link>
 
-        <h1 className="   text-3xl overflow-hidden break-words">
-          {noteItem?.title}
-        </h1>
-        <p className="max-w-full overflow-hidden break-words">
+        <h1 className="text-3xl break-words mb-5 ">{noteItem?.title}</h1>
+        <p className="max-w-full w-full break-words text-xl">
           {noteItem?.content}
         </p>
-        <div className="flex justify-center items-center mt-2">
-          <img src={String(noteItem?.image)} alt="" className="h-2/3 w-1/2" />
+        <div className="mx-auto  w-3/4 h-3/4">
+          <img src={String(noteItem?.image)} alt="" className="" />
         </div>
 
-        <div className="flex mt-2">
+        <div className="flex w-6/12 mx-auto mt- ">
           <Link
             href={`/edit/${params.id}`}
             // onClick={handleEdit}

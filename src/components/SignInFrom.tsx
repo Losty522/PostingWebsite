@@ -77,6 +77,11 @@ const SignInForm = () => {
         <Link href="/auth/signup" className="text-blue-500">
           Create a new account
         </Link>
+        <p className="mt-3">
+          sample Email: <span className="text-red-500">sample@sample.com</span>
+          <br />
+          sample Password: <span className="text-red-500">test</span>
+        </p>
       </div>
     </div>
   );
